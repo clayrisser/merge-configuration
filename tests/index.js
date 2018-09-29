@@ -49,6 +49,29 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
   });
 });
 
+describe('mergeConf(config, modifier, { concat: true, dedup: true }, ...args)', () => {
+  it('should pass additional args through modifier', async () => {
+    const merged = mergeConf(
+      { one: 1 },
+      (config, ...args) => {
+        config.two = 2;
+        config = {
+          ...config,
+          ...args.reduce((args, arg, i) => {
+            args[arg] = i + 3;
+            return args;
+          }, {})
+        };
+        return config;
+      },
+      {},
+      'three',
+      'four'
+    );
+    expect(merged).toEqual({ one: 1, two: 2, three: 3, four: 4 });
+  });
+});
+
 describe('mergeConf(config, modifier, { concat: true, dedup: false })', () => {
   it('should concat and not dedup arrays', async () => {
     expect(mergeConf([1, 2], [2, 3], { dedup: false })).toEqual([1, 2, 2, 3]);

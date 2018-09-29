@@ -2,7 +2,7 @@ import clone from 'lodash.clone';
 import mergeWith from 'lodash.mergewith';
 import uniq from 'lodash.uniq';
 
-export default function mergeConfiguration(config, modifier, options) {
+export default function mergeConfiguration(config, modifier, options, ...args) {
   if (typeof config === 'undefined') return modifier;
   if (typeof modifier === 'undefined') return config;
   if (config === null) return modifier;
@@ -13,7 +13,7 @@ export default function mergeConfiguration(config, modifier, options) {
     ...options
   };
   config = clone(config);
-  if (typeof modifier === 'function') return modifier(config);
+  if (typeof modifier === 'function') return modifier(config, ...args);
   if (
     Array.isArray(config) || Array.isArray(modifier)
       ? Array.isArray(config) !== Array.isArray(modifier)
