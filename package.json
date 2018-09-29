@@ -1,16 +1,16 @@
 {
-  "name": "merge-conf",
+  "name": "merge-configuration",
   "version": "0.1.0",
   "description": "merge configuration",
   "keywords": [
-    "merge-conf",
+    "merge-configuration",
     "merge",
     "conf",
     "configuration"
   ],
-  "homepage": "https://github.com/codejamninja/merge-conf",
+  "homepage": "https://github.com/codejamninja/merge-configuration",
   "bugs": {
-    "url": "https://github.com/codejamninja/merge-conf/issues",
+    "url": "https://github.com/codejamninja/merge-configuration/issues",
     "email": "jam@codejam.ninja"
   },
   "license": "MIT",
@@ -25,7 +25,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codejamninja/merge-conf"
+    "url": "https://github.com/codejamninja/merge-configuration"
   },
   "scripts": {
     "build": "babel src -d lib",

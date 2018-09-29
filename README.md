@@ -1,6 +1,6 @@
-# merge-conf
+# merge-configuration
 
-[![GitHub stars](https://img.shields.io/github/stars/codejamninja/merge-conf.svg?style=social&label=Stars)](https://github.com/codejamninja/merge-conf)
+[![GitHub stars](https://img.shields.io/github/stars/codejamninja/merge-configuration.svg?style=social&label=Stars)](https://github.com/codejamninja/merge-configuration)
 
 > merge configuration
 
@@ -16,7 +16,7 @@ Please ★ this repo if you found it useful ★ ★ ★
 ## Installation
 
 ```sh
-npm install --save merge-conf
+npm install --save merge-configuration
 ```
 
 
@@ -27,34 +27,34 @@ npm install --save merge-conf
 
 ## Usage
 
-[Contribute](https://github.com/codejamninja/merge-conf/blob/master/CONTRIBUTING.md) usage docs
+[Contribute](https://github.com/codejamninja/merge-configuration/blob/master/CONTRIBUTING.md) usage docs
 
 
 ## Support
 
-Submit an [issue](https://github.com/codejamninja/merge-conf/issues/new)
+Submit an [issue](https://github.com/codejamninja/merge-configuration/issues/new)
 
 
 ## Screenshots
 
-[Contribute](https://github.com/codejamninja/merge-conf/blob/master/CONTRIBUTING.md) a screenshot
+[Contribute](https://github.com/codejamninja/merge-configuration/blob/master/CONTRIBUTING.md) a screenshot
 
 
 ## Contributing
 
-Review the [guidelines for contributing](https://github.com/codejamninja/merge-conf/blob/master/CONTRIBUTING.md)
+Review the [guidelines for contributing](https://github.com/codejamninja/merge-configuration/blob/master/CONTRIBUTING.md)
 
 
 ## License
 
-[MIT License](https://github.com/codejamninja/merge-conf/blob/master/LICENSE)
+[MIT License](https://github.com/codejamninja/merge-configuration/blob/master/LICENSE)
 
 [Jam Risser](https://codejam.ninja) © 2018
 
 
 ## Changelog
 
-Review the [changelog](https://github.com/codejamninja/merge-conf/blob/master/CHANGELOG.md)
+Review the [changelog](https://github.com/codejamninja/merge-configuration/blob/master/CHANGELOG.md)
 
 
 ## Credits

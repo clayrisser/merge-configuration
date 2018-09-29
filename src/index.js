@@ -2,7 +2,7 @@ import clone from 'lodash.clone';
 import mergeWith from 'lodash.mergewith';
 import uniq from 'lodash.uniq';
 
-export default function mergeConf(config, modifier, options) {
+export default function mergeConfiguration(config, modifier, options) {
   options = {
     concat: true,
     dedup: true,
