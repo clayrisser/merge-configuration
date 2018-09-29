@@ -1,6 +1,6 @@
 {
   "name": "merge-configuration",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "merge configuration",
   "keywords": [
     "merge-configuration",
@@ -28,7 +28,7 @@
     "url": "https://github.com/codejamninja/merge-configuration"
   },
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "npm run test && babel src -d lib",
     "clean": "rimraf lib",
     "format": "prettier --write ./src/**/*.js",
     "lint": "npm run format && eslint ./",

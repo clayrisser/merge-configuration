@@ -3,6 +3,10 @@ import mergeWith from 'lodash.mergewith';
 import uniq from 'lodash.uniq';
 
 export default function mergeConfiguration(config, modifier, options) {
+  if (typeof config === 'undefined') return modifier;
+  if (typeof modifier === 'undefined') return config;
+  if (config === null) return modifier;
+  if (modifier === null) return config;
   options = {
     concat: true,
     dedup: true,

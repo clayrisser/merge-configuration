@@ -32,11 +32,20 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
       item: [1, 2, 3]
     });
   });
-  it('should replace numbers', async () => {
+  it('should replace primatives', async () => {
     expect(mergeConf(1, 2)).toEqual(2);
-  });
-  it('should replace strings', async () => {
     expect(mergeConf('one', 'two')).toEqual('two');
+    expect(mergeConf(true, false)).toEqual(false);
+  });
+  it('should ignore undefined or null', async () => {
+    expect(mergeConf(undefined, 'abc')).toEqual('abc');
+    expect(mergeConf('abc', undefined)).toEqual('abc');
+    expect(mergeConf(undefined, undefined)).toEqual(undefined);
+    expect(mergeConf(null, undefined)).toEqual(null);
+    expect(mergeConf(undefined, null)).toEqual(null);
+    expect(mergeConf(null, 'abc')).toEqual('abc');
+    expect(mergeConf('abc', null)).toEqual('abc');
+    expect(mergeConf(null, null)).toEqual(null);
   });
 });
 
