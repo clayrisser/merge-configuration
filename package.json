@@ -1,0 +1,70 @@
+{
+  "name": "merge-conf",
+  "version": "0.1.0",
+  "description": "merge configuration",
+  "keywords": [
+    "merge-conf",
+    "merge",
+    "conf",
+    "configuration"
+  ],
+  "homepage": "https://github.com/codejamninja/merge-conf",
+  "bugs": {
+    "url": "https://github.com/codejamninja/merge-conf/issues",
+    "email": "jam@codejam.ninja"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jam Risser",
+    "email": "jam@codejam.ninja",
+    "url": "https://codejam.ninja"
+  },
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codejamninja/merge-conf"
+  },
+  "scripts": {
+    "build": "babel src -d lib",
+    "clean": "rimraf lib",
+    "format": "prettier --write ./src/**/*.js",
+    "lint": "npm run format && eslint ./",
+    "lint:fix": "npm run format && eslint --fix ./",
+    "prepublish": "npm run clean && npm run build",
+    "start": "babel-node src",
+    "test": "npm run lint && jest"
+  },
+  "dependencies": {
+    "lodash.clone": "^4.5.0",
+    "lodash.mergewith": "^4.6.1",
+    "lodash.uniq": "^4.5.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^9.0.0",
+    "babel-preset-everything": "^0.1.2",
+    "eslint": "^5.5.0",
+    "eslint-config-jam": "^0.1.2",
+    "eslint-plugin-jest": "^21.22.0",
+    "jest": "^23.5.0",
+    "rimraf": "^2.6.2"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "eslintIgnore": [
+    "lib"
+  ],
+  "jest": {
+    "testMatch": [
+      "**/tests/**/[^_]*.js"
+    ],
+    "verbose": true
+  }
+}

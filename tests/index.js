@@ -1,0 +1,67 @@
+import mergeConf from '../src';
+
+describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
+  it('should be a function', async () => {
+    expect(typeof mergeConf).toBe('function');
+  });
+  it('should be cloned', async () => {
+    const config = {};
+    const merged = mergeConf(config, config => config);
+    expect(config).not.toBe(merged);
+  });
+  it('should throw error when config types do not match', async () => {
+    try {
+      mergeConf({}, []);
+      expect(true).toBe(false);
+    } catch (err) {
+      expect(err).toEqual(new Error('config types must match'));
+    }
+  });
+  it('should pass config through modifier', async () => {
+    const merged = mergeConf({ one: 1 }, config => {
+      config.two = 2;
+      return config;
+    });
+    expect(merged).toEqual({ one: 1, two: 2 });
+  });
+  it('should concat and dedup arrays', async () => {
+    expect(mergeConf([1, 2], [2, 3])).toEqual([1, 2, 3]);
+  });
+  it('should concat and dedup array properties', async () => {
+    expect(mergeConf({ item: [1, 2] }, { item: [2, 3] })).toEqual({
+      item: [1, 2, 3]
+    });
+  });
+  it('should replace numbers', async () => {
+    expect(mergeConf(1, 2)).toEqual(2);
+  });
+  it('should replace strings', async () => {
+    expect(mergeConf('one', 'two')).toEqual('two');
+  });
+});
+
+describe('mergeConf(config, modifier, { concat: true, dedup: false })', () => {
+  it('should concat and not dedup arrays', async () => {
+    expect(mergeConf([1, 2], [2, 3], { dedup: false })).toEqual([1, 2, 2, 3]);
+  });
+  it('should concat and not dedup array properties', async () => {
+    expect(
+      mergeConf({ item: [1, 2] }, { item: [2, 3] }, { dedup: false })
+    ).toEqual({
+      item: [1, 2, 2, 3]
+    });
+  });
+});
+
+describe('mergeConf(config, modifier, { concat: false })', () => {
+  it('should not concat arrays', async () => {
+    expect(mergeConf([1, 2], [2, 3], { concat: false })).toEqual([2, 3]);
+  });
+  it('should not concat array properties', async () => {
+    expect(
+      mergeConf({ item: [1, 2] }, { item: [2, 3] }, { concat: false })
+    ).toEqual({
+      item: [2, 3]
+    });
+  });
+});
