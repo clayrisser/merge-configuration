@@ -9,13 +9,9 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
     const merged = mergeConf(config, config => config);
     expect(config).not.toBe(merged);
   });
-  it('should throw error when config types do not match', async () => {
-    try {
-      mergeConf({}, []);
-      expect(true).toBe(false);
-    } catch (err) {
-      expect(err).toEqual(new Error('config types must match'));
-    }
+  it('should override when config types do not match', async () => {
+    const merged = mergeConf({}, []);
+    expect(merged).toEqual([]);
   });
   it('should pass config through modifier', async () => {
     const merged = mergeConf({ one: 1 }, config => {

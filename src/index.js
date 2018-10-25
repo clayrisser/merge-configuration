@@ -19,9 +19,8 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
       ? Array.isArray(config) !== Array.isArray(modifier)
       : typeof config !== typeof modifier
   ) {
-    throw new Error('config types must match');
+    return modifier;
   }
-
   if (Array.isArray(config)) {
     if (options.concat) {
       config = config.concat(modifier);
@@ -37,7 +36,7 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
         if (options.dedup) return uniq(value);
         return value;
       }
-      return newValue;
+      return mergeConfiguration(oldValue, newValue, options, ...args);
     });
   }
   return modifier;
