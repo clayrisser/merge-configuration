@@ -10,10 +10,25 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
   options = {
     concat: true,
     dedup: true,
+    preserveFunctions: false,
     ...options
   };
-  config = clone(config);
-  if (typeof modifier === 'function') return modifier(config, ...args);
+  if (options.preserveFunctions) options._preserveFunctions = true;
+  if (typeof config !== 'function') {
+    config = clone(config);
+  }
+  if (typeof modifier === 'function') {
+    if (options._preserveFunctions) {
+      return (...args) => {
+        let context = config;
+        if (typeof config === 'function') {
+          context = config(...args);
+        }
+        return mergeConfiguration(context, modifier(...args));
+      };
+    }
+    return modifier(config, ...args);
+  }
   if (
     Array.isArray(config) || Array.isArray(modifier)
       ? Array.isArray(config) !== Array.isArray(modifier)
@@ -36,6 +51,7 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
         if (options.dedup) return uniq(value);
         return value;
       }
+      options._preserveFunctions = true;
       return mergeConfiguration(oldValue, newValue, options, ...args);
     });
   }
