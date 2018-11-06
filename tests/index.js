@@ -43,7 +43,7 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
     expect(mergeConf('abc', null)).toEqual('abc');
     expect(mergeConf(null, null)).toEqual(null);
   });
-  it('should preserve functions', async () => {
+  it('should preserve child functions', async () => {
     const config = mergeConf(
       {
         func: () => ({ hello: 'world' })
@@ -55,6 +55,27 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
       }
     );
     expect(config.func()).toEqual({ hello: 'world', howdy: 'texas' });
+  });
+  it('should handle config as function', async () => {
+    const config = mergeConf(() => ({ hello: 'world' }), null);
+    expect(config).toEqual({ hello: 'world' });
+  });
+  it('should merge two functions', async () => {
+    const config = mergeConf(
+      () => ({ hello: 'world' }),
+      config => {
+        config.howdy = 'texas';
+        return config;
+      }
+    );
+    expect(config).toEqual({ hello: 'world', howdy: 'texas' });
+  });
+  it('should pass config to modifier function', async () => {
+    const config = mergeConf({ hello: 'world' }, config => {
+      config.howdy = 'texas';
+      return config;
+    });
+    expect(config).toEqual({ hello: 'world', howdy: 'texas' });
   });
 });
 

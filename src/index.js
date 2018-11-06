@@ -2,11 +2,14 @@ import clone from 'lodash.clone';
 import mergeWith from 'lodash.mergewith';
 import uniq from 'lodash.uniq';
 
+function pass(config, options, ...args) {
+  if (typeof config === 'function' && !options._preserveFunctions) {
+    return config(null, ...args);
+  }
+  return config;
+}
+
 export default function mergeConfiguration(config, modifier, options, ...args) {
-  if (typeof config === 'undefined') return modifier;
-  if (typeof modifier === 'undefined') return config;
-  if (config === null) return modifier;
-  if (modifier === null) return config;
   options = {
     concat: true,
     dedup: true,
@@ -14,6 +17,10 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
     ...options
   };
   if (options.preserveFunctions) options._preserveFunctions = true;
+  if (typeof config === 'undefined') return pass(modifier, options, ...args);
+  if (typeof modifier === 'undefined') return pass(config, options, ...args);
+  if (config === null) return pass(modifier, options, ...args);
+  if (modifier === null) return pass(config, options, ...args);
   if (typeof config !== 'function') {
     config = clone(config);
   }
