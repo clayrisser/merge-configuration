@@ -43,6 +43,14 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
     expect(mergeConf('abc', null)).toEqual('abc');
     expect(mergeConf(null, null)).toEqual(null);
   });
+  it('should preserve functions', async () => {
+    const config = mergeConf({
+      func: () => {
+        return { hello: 'world' };
+      }
+    });
+    expect(config.func()).toEqual({ hello: 'world' });
+  });
 });
 
 describe('mergeConf(config, modifier, { concat: true, dedup: true }, ...args)', () => {
