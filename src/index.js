@@ -27,6 +27,9 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
         return mergeConfiguration(context, modifier(...args));
       };
     }
+    if (typeof config === 'function') {
+      config = config(null, ...args);
+    }
     return modifier(config, ...args);
   }
   if (
