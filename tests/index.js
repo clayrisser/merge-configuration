@@ -13,13 +13,6 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
     const merged = mergeConf({}, []);
     expect(merged).toEqual([]);
   });
-  it('should pass config through modifier', async () => {
-    const merged = mergeConf({ one: 1 }, config => {
-      config.two = 2;
-      return config;
-    });
-    expect(merged).toEqual({ one: 1, two: 2 });
-  });
   it('should concat and dedup arrays', async () => {
     expect(mergeConf([1, 2], [2, 3])).toEqual([1, 2, 3]);
   });
@@ -43,34 +36,38 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
     expect(mergeConf('abc', null)).toEqual('abc');
     expect(mergeConf(null, null)).toEqual(null);
   });
-  it('should preserve child functions', async () => {
+  it('should preserve functions', async () => {
     const config = mergeConf(
       {
-        func: () => ({ hello: 'world' })
+        hello: 'world'
       },
       {
-        func: () => {
-          return { howdy: 'texas' };
-        }
+        hello: () => 'texas'
       }
     );
-    expect(config.func()).toEqual({ hello: 'world', howdy: 'texas' });
+    expect(typeof config.hello).toBe('function');
+    expect(config.hello()).toBe('texas');
   });
-  it('should handle config as function', async () => {
-    const config = mergeConf(() => ({ hello: 'world' }), null);
-    expect(config).toEqual({ hello: 'world' });
-  });
-  it('should merge two functions', async () => {
+  it('should support modifier functions on sublevels', async () => {
     const config = mergeConf(
-      () => ({ hello: 'world' }),
-      config => {
-        config.howdy = 'texas';
-        return config;
+      {
+        hello: {
+          world: 99
+        }
+      },
+      {
+        hello: {
+          world: conf => ++conf
+        }
+      },
+      {
+        level: 2
       }
     );
-    expect(config).toEqual({ hello: 'world', howdy: 'texas' });
+    expect(typeof config.hello.world).toBe('number');
+    expect(config.hello.world).toBe(100);
   });
-  it('should pass config to modifier function', async () => {
+  it('should pass config through modifier', async () => {
     const config = mergeConf({ hello: 'world' }, config => {
       config.howdy = 'texas';
       return config;

@@ -2,41 +2,22 @@ import clone from 'lodash.clone';
 import mergeWith from 'lodash.mergewith';
 import uniq from 'lodash.uniq';
 
-function pass(config, options, ...args) {
-  if (typeof config === 'function' && !options._preserveFunctions) {
-    return config(null, ...args);
-  }
-  return config;
-}
-
 export default function mergeConfiguration(config, modifier, options, ...args) {
   options = {
+    _level: 0,
     concat: true,
     dedup: true,
+    level: 0,
     preserveFunctions: false,
     ...options
   };
-  if (options.preserveFunctions) options._preserveFunctions = true;
-  if (typeof config === 'undefined') return pass(modifier, options, ...args);
-  if (typeof modifier === 'undefined') return pass(config, options, ...args);
-  if (config === null) return pass(modifier, options, ...args);
-  if (modifier === null) return pass(config, options, ...args);
-  if (typeof config !== 'function') {
-    config = clone(config);
-  }
+  if (typeof config === 'undefined') return modifier;
+  if (typeof modifier === 'undefined') return config;
+  if (config === null) return modifier;
+  if (modifier === null) return config;
+  config = clone(config);
   if (typeof modifier === 'function') {
-    if (options._preserveFunctions) {
-      return (...args) => {
-        let context = config;
-        if (typeof config === 'function') {
-          context = config(...args);
-        }
-        return mergeConfiguration(context, modifier(...args));
-      };
-    }
-    if (typeof config === 'function') {
-      config = config(null, ...args);
-    }
+    if (options._level > options.level) return modifier;
     return modifier(config, ...args);
   }
   if (
@@ -56,13 +37,15 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
   }
   if (typeof config === 'object') {
     return mergeWith(config, modifier, (oldValue, newValue) => {
-      if (options.concat && Array.isArray(oldValue)) {
-        const value = oldValue.concat(newValue);
-        if (options.dedup) return uniq(value);
-        return value;
-      }
-      options._preserveFunctions = true;
-      return mergeConfiguration(oldValue, newValue, options, ...args);
+      return mergeConfiguration(
+        oldValue,
+        newValue,
+        {
+          ...options,
+          _level: ++options._level
+        },
+        ...args
+      );
     });
   }
   return modifier;
