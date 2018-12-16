@@ -137,7 +137,7 @@ describe('mergeConf(config, modifier, { mergeModifierFunction: true })', () => {
       () => ({
         howdy: 'texas'
       }),
-      { mergeModifierFunction: false }
+      { mergeModifierFunction: true }
     );
     expect(config).toEqual({ hello: 'world', howdy: 'texas' });
   });
