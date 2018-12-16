@@ -48,25 +48,6 @@ describe('mergeConf(config, modifier, { concat: true, dedup: true })', () => {
     expect(typeof config.hello).toBe('function');
     expect(config.hello()).toBe('texas');
   });
-  it('should support modifier functions on sublevels', async () => {
-    const config = mergeConf(
-      {
-        hello: {
-          world: 99
-        }
-      },
-      {
-        hello: {
-          world: conf => ++conf
-        }
-      },
-      {
-        level: 2
-      }
-    );
-    expect(typeof config.hello.world).toBe('number');
-    expect(config.hello.world).toBe(100);
-  });
   it('should pass config through modifier', async () => {
     const config = mergeConf({ hello: 'world' }, config => {
       config.howdy = 'texas';
@@ -122,5 +103,42 @@ describe('mergeConf(config, modifier, { concat: false })', () => {
     ).toEqual({
       item: [2, 3]
     });
+  });
+});
+
+describe('mergeConf(config, modifier, { level })', () => {
+  it('should support modifier functions on sublevels', async () => {
+    const config = mergeConf(
+      {
+        hello: {
+          world: 99
+        }
+      },
+      {
+        hello: {
+          world: conf => ++conf
+        }
+      },
+      {
+        level: 2
+      }
+    );
+    expect(typeof config.hello.world).toBe('number');
+    expect(config.hello.world).toBe(100);
+  });
+});
+
+describe('mergeConf(config, modifier, { mergeModifierFunction: true })', () => {
+  it('should merge modifier function', async () => {
+    const config = mergeConf(
+      {
+        hello: 'world'
+      },
+      () => ({
+        howdy: 'texas'
+      }),
+      { mergeModifierFunction: false }
+    );
+    expect(config).toEqual({ hello: 'world', howdy: 'texas' });
   });
 });

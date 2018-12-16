@@ -1,6 +1,6 @@
 {
   "name": "merge-configuration",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "merge configuration",
   "keywords": [
     "merge-configuration",
@@ -29,7 +29,7 @@
   },
   "scripts": {
     "build": "npm run test && babel src -d lib",
-    "clean": "rimraf lib",
+    "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/* && jest --clearCache",
     "format": "prettier --write ./src/**/*.js",
     "lint": "npm run format && eslint ./",
     "lint:fix": "npm run format && eslint --fix ./",
@@ -53,8 +53,7 @@
     "eslint": "^5.5.0",
     "eslint-config-jam": "^0.1.2",
     "eslint-plugin-jest": "^21.22.0",
-    "jest": "^23.5.0",
-    "rimraf": "^2.6.2"
+    "jest": "^23.5.0"
   },
   "engines": {
     "node": ">=6.0.0"

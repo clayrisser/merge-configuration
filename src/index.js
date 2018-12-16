@@ -8,7 +8,7 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
     concat: true,
     dedup: true,
     level: 0,
-    preserveFunctions: false,
+    mergeModifierFunction: false,
     ...options
   };
   if (typeof config === 'undefined') return modifier;
@@ -18,7 +18,11 @@ export default function mergeConfiguration(config, modifier, options, ...args) {
   config = clone(config);
   if (typeof modifier === 'function') {
     if (options._level > options.level) return modifier;
-    return modifier(config, ...args);
+    const modifiedConfig = modifier(config, ...args);
+    if (options.mergeModifierFunction) {
+      return mergeConfiguration(config, modifiedConfig, options, ...args);
+    }
+    return modifiedConfig;
   }
   if (
     Array.isArray(config) || Array.isArray(modifier)
