@@ -16,8 +16,12 @@ export default function merge<Config>(
     mergeModifierFunction: false,
     ...partialOptions
   };
-  if (config === null) return (modifier as unknown) as Config;
-  if (modifier === null) return (config as unknown) as Config;
+  if (config === null || typeof config === 'undefined') {
+    return (modifier as unknown) as Config;
+  }
+  if (modifier === null || typeof modifier === 'undefined') {
+    return (config as unknown) as Config;
+  }
   config = clone(config);
   if (typeof modifier === 'function') {
     if (options._level > options.level) return (modifier as unknown) as Config;
