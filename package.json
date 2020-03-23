@@ -1,12 +1,12 @@
 {
   "name": "merge-configuration",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "merge configuration",
   "keywords": [
     "merge-configuration",
     "merge",
-    "conf",
-    "configuration"
+    "configuration",
+    "config"
   ],
   "homepage": "https://github.com/codejamninja/merge-configuration",
   "bugs": {
@@ -28,32 +28,46 @@
     "url": "https://github.com/codejamninja/merge-configuration"
   },
   "scripts": {
-    "build": "npm run test && babel src -d lib",
-    "clean": "git clean -fXd -e \\!node_modules -e \\!node_modules/**/* && jest --clearCache",
-    "format": "prettier --write ./src/**/*.js",
-    "lint": "npm run format && eslint ./",
-    "lint:fix": "npm run format && eslint --fix ./",
-    "prepublish": "npm run clean && npm run build",
-    "start": "babel-node src",
-    "test": "npm run lint && jest"
+    "build": "make -s build",
+    "clean": "make -s clean",
+    "format": "make -s format",
+    "lint": "make -s lint",
+    "make": "make --version",
+    "prepare": "make -s prepare",
+    "purge": "make -s purge",
+    "report": "make -s report",
+    "spellcheck": "make -s spellcheck",
+    "start": "make -s start",
+    "test": "make -s test"
   },
   "dependencies": {
-    "babel-jest": "^23.6.0",
+    "core-js": "^3.6.4",
     "lodash.clone": "^4.5.0",
-    "lodash.mergewith": "^4.6.1",
-    "lodash.uniq": "^4.5.0"
+    "lodash.mergewith": "^4.6.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^9.0.0",
-    "babel-preset-everything": "^0.1.2",
-    "eslint": "^5.5.0",
-    "eslint-config-jam": "^0.1.2",
-    "eslint-plugin-jest": "^21.22.0",
-    "jest": "^23.5.0"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/jest": "^25.1.4",
+    "@types/lodash.clone": "^4.5.6",
+    "@types/lodash.mergewith": "^4.6.6",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
+    "cspell": "^4.0.55",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-typescript": "^7.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "gnumake": "^0.1.0",
+    "jest": "^25.1.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.3"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -62,9 +76,7 @@
     "lib"
   ],
   "jest": {
-    "testMatch": [
-      "**/tests/**/[^_]*.js"
-    ],
+    "testRegex": "tests(/|/.*/)[^_/]*[jt]sx?$",
     "verbose": true
   }
 }
