@@ -5,7 +5,7 @@
 > merge configuration
 
 Please ★ this repo if you found it useful ★ ★ ★
-
+![](assets/merge-configurations.png)
 ## Features
 
 - Supports modifier function
